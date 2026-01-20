@@ -1,6 +1,3 @@
-Here is the updated README. I’ve refined the **User Personas** to reflect the current state of the app (Job Seeker focus) and the **Meet the Dev** section to highlight your role as the Admin/Creator.
-
-```markdown
 # 🕵️‍♀️ The Bad Guys — LinkedIn Fake Profile Detection
 
 > **"Because your career journey is too important to waste on scammers, sweetheart."**
@@ -66,16 +63,3 @@ The fastest way to edit is via the [Lovable Project](https://lovable.dev/project
 git clone <YOUR_GIT_URL>
 npm i
 npm run dev
-
-```
-
----
-
-*Made with 💖 to keep the job market a little bit safer.*
-
-```
-
-### Next Step
-Would you like me to create the **Admin Dashboard UI layout** using the Midnight Ivy and Peony Blush colors so you can manage the "Bad Guys" easily?
-
-```
