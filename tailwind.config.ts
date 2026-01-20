@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        serif: ["Playfair Display", "Georgia", "serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -57,11 +61,33 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Brand Colors
+        botanical: {
+          dark: "hsl(var(--botanical-dark))",
+        },
+        shadow: {
+          teal: "hsl(var(--shadow-teal))",
+        },
+        peony: {
+          pink: "hsl(var(--peony-pink))",
+        },
+        eucalyptus: "hsl(var(--eucalyptus))",
+        mist: {
+          white: "hsl(var(--mist-white))",
+        },
+        frosted: {
+          leaf: "hsl(var(--frosted-leaf))",
+        },
+        sweet: {
+          coral: "hsl(var(--sweet-coral))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        "3xl": "1.5rem",
+        "4xl": "2rem",
       },
       keyframes: {
         "accordion-down": {
@@ -80,10 +106,28 @@ export default {
             height: "0",
           },
         },
+        "pulse-glow": {
+          "0%, 100%": {
+            opacity: "0.25",
+          },
+          "50%": {
+            opacity: "1",
+          },
+        },
+        "float": {
+          "0%, 100%": {
+            transform: "translateY(0px)",
+          },
+          "50%": {
+            transform: "translateY(-10px)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
       },
     },
   },
