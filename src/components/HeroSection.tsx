@@ -27,7 +27,7 @@ const HeroSection = () => {
 
         {/* Main Heading */}
         <h2 className="text-4xl md:text-6xl font-serif text-foreground mb-6 leading-tight">
-          Spot the <span className="text-primary">Bad Guys</span> <br /> 
+          Spot the <span className="text-primary neon-text">Bad Guys</span> <br /> 
           before you hit send.
         </h2>
         
@@ -51,7 +51,7 @@ const HeroSection = () => {
             />
             <Button 
               onClick={handleCheck}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-6 rounded-3xl transition-all transform hover:scale-[1.02] active:scale-95 whitespace-nowrap"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-6 rounded-3xl transition-all transform hover:scale-[1.02] active:scale-95 whitespace-nowrap hover:glow-pink-neon"
             >
               Check Profile
             </Button>

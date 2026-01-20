@@ -22,8 +22,8 @@
     --popover: 176 26% 20%;
     --popover-foreground: 168 24% 93%;
 
-    /* Primary Accent - Peony Blush #F2B5D4 */
-    --primary: 330 71% 83%;
+    /* Primary Accent - Neon Pink (more vibrant) */
+    --primary: 330 100% 70%;
     --primary-foreground: 177 29% 15%;
 
     /* Secondary - Silver Sage #88A096 */
@@ -59,6 +59,8 @@
     --sidebar-ring: 330 71% 83%;
 
     /* Custom Brand Colors */
+    --peony-pink: 330 100% 70%;
+    --peony-pink-glow: 330 100% 65%;
     --botanical-dark: 177 29% 15%;
     --shadow-teal: 176 26% 20%;
     --peony-pink: 330 71% 83%;
@@ -117,21 +119,38 @@
 /* Custom utility classes */
 @layer utilities {
   .glow-pink {
-    box-shadow: 0 0 20px hsl(330 71% 83% / 0.15);
+    box-shadow: 0 0 20px hsl(330 100% 70% / 0.2);
+  }
+
+  .glow-pink-hover {
+    box-shadow: 0 0 30px hsl(330 100% 70% / 0.4), 0 0 60px hsl(330 100% 70% / 0.2);
   }
 
   .glow-pink-strong {
-    box-shadow: 0 0 30px hsl(330 71% 83% / 0.25);
+    box-shadow: 0 0 40px hsl(330 100% 70% / 0.5), 0 0 80px hsl(330 100% 70% / 0.3);
+  }
+
+  .glow-pink-neon {
+    box-shadow: 0 0 10px hsl(330 100% 70% / 0.6), 
+                0 0 20px hsl(330 100% 70% / 0.4), 
+                0 0 40px hsl(330 100% 70% / 0.3),
+                0 0 80px hsl(330 100% 70% / 0.2);
   }
 
   .gradient-border {
-    background: linear-gradient(135deg, hsl(330 71% 83%), hsl(177 29% 15%)) border-box;
+    background: linear-gradient(135deg, hsl(330 100% 70%), hsl(177 29% 15%)) border-box;
   }
 
   .text-gradient-pink {
-    background: linear-gradient(135deg, hsl(330 71% 83%), hsl(0 100% 71%));
+    background: linear-gradient(135deg, hsl(330 100% 70%), hsl(0 100% 71%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px hsl(330 100% 70% / 0.5), 
+                 0 0 20px hsl(330 100% 70% / 0.3),
+                 0 0 40px hsl(330 100% 70% / 0.2);
   }
 }
