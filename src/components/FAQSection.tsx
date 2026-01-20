@@ -55,7 +55,7 @@ const FAQSection = () => {
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="bg-card rounded-3xl border border-secondary/20 px-6 overflow-hidden data-[state=open]:glow-pink"
+              className="bg-card rounded-3xl border border-secondary/20 px-6 overflow-hidden hover:border-primary/40 transition-all duration-300 data-[state=open]:glow-pink-hover data-[state=open]:border-primary/50"
             >
               <AccordionTrigger className="text-left font-medium text-foreground hover:text-primary py-5 hover:no-underline">
                 {faq.question}

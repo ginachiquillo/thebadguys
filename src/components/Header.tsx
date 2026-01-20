@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 const Header = () => {
   return (
     <header className="absolute top-0 w-full p-6 md:p-8 flex justify-between items-center max-w-7xl left-1/2 -translate-x-1/2 z-20">
-      <h1 className="text-xl md:text-2xl font-serif italic text-primary tracking-tight">
+      <h1 className="text-xl md:text-2xl font-serif italic text-primary tracking-tight neon-text">
         The Bad Guys.
       </h1>
       <nav className="flex items-center gap-4">
@@ -17,7 +17,7 @@ const Header = () => {
           Login
         </Button>
         <Button 
-          className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5 hover:glow-pink-strong transition-all duration-300"
         >
           Sign Up
         </Button>

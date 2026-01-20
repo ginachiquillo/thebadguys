@@ -22,7 +22,7 @@ const ProfileCard = ({ name, title, riskScore, searchCount, isActive = true }: P
   };
 
   return (
-    <div className="bg-card rounded-3xl border border-secondary/20 p-5 hover:border-primary/40 transition-all duration-300 glow-pink group cursor-pointer">
+    <div className="bg-card rounded-3xl border border-secondary/20 p-5 hover:border-primary/60 transition-all duration-300 glow-pink hover:glow-pink-hover group cursor-pointer">
       <div className="flex items-start gap-4">
         {/* Avatar placeholder */}
         <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0">

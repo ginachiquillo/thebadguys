@@ -15,7 +15,7 @@ const KPICard = ({ value, label, icon, variant = 'default' }: KPICardProps) => {
   };
 
   return (
-    <div className={`bg-card rounded-3xl border ${variantStyles[variant]} p-6 text-center glow-pink`}>
+    <div className={`bg-card rounded-3xl border ${variantStyles[variant]} p-6 text-center glow-pink hover:glow-pink-hover transition-all duration-300 cursor-default`}>
       <div className="flex justify-center mb-3 text-secondary">
         {icon}
       </div>
