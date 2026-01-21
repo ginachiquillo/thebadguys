@@ -12,11 +12,11 @@
 @layer base {
   :root {
     /* Main Background - Midnight Ivy #1C3332 */
-    --background: 177 29% 15%;
+    --background: 177 40% 7%;
     --foreground: 32 30% 94%;
 
     /* Surface/Cards - Shadow Fern #26413F */
-    --card: 176 26% 20%;
+    --card: 174 38% %;
     --card-foreground: 168 24% 93%;
 
     --popover: 176 26% 20%;
@@ -31,8 +31,8 @@
     --secondary-foreground: 168 24% 93%;
 
     /* Muted - Frosted Leaf #A8C3B8 */
-    --muted: 151 21% 71%;
-    --muted-foreground: 151 21% 71%;
+    --muted: 174 30% 20%;
+    --muted-foreground: 32 21% 70%;
 
     /* Accent - Silver Sage #88A096 */
     --accent: 147 14% 58%;
