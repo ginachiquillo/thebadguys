@@ -1,15 +1,79 @@
 import { useState } from 'react';
 import { Search, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+
+/**
+ * Validates that a URL is a valid LinkedIn profile or company URL.
+ * Prevents SSRF and injection attacks by enforcing strict domain allowlist.
+ */
+const validateLinkedInUrl = (url: string): { valid: boolean; error?: string } => {
+  const trimmedUrl = url.trim();
+  
+  if (!trimmedUrl) {
+    return { valid: false, error: 'Please enter a LinkedIn URL' };
+  }
+
+  try {
+    const parsed = new URL(trimmedUrl);
+    
+    // Strict hostname validation - only allow linkedin.com domains
+    const isLinkedInDomain = 
+      parsed.hostname === 'linkedin.com' || 
+      parsed.hostname === 'www.linkedin.com' ||
+      parsed.hostname.endsWith('.linkedin.com');
+    
+    if (!isLinkedInDomain) {
+      return { valid: false, error: 'Please enter a valid LinkedIn URL' };
+    }
+
+    // Validate path format for profiles or companies
+    const validPaths = ['/in/', '/company/', '/pub/'];
+    const hasValidPath = validPaths.some(path => parsed.pathname.startsWith(path));
+    
+    if (!hasValidPath) {
+      return { valid: false, error: 'Please enter a LinkedIn profile or company URL' };
+    }
+
+    // Ensure HTTPS protocol
+    if (parsed.protocol !== 'https:') {
+      return { valid: false, error: 'Please use a secure LinkedIn URL (https)' };
+    }
+
+    return { valid: true };
+  } catch {
+    return { valid: false, error: 'Please enter a valid URL' };
+  }
+};
 
 const HeroSection = () => {
   const [url, setUrl] = useState('');
+  const [isValidating, setIsValidating] = useState(false);
+  const { toast } = useToast();
 
   const handleCheck = () => {
-    if (url.trim()) {
-      console.log('Checking profile:', url);
-      // TODO: Implement profile check
+    const trimmedUrl = url.trim();
+    if (!trimmedUrl) return;
+
+    const validation = validateLinkedInUrl(trimmedUrl);
+    
+    if (!validation.valid) {
+      toast({
+        title: 'Invalid URL',
+        description: validation.error,
+        variant: 'destructive',
+      });
+      return;
     }
+
+    setIsValidating(true);
+    // TODO: Implement profile check with validated URL
+    // The URL is now validated and safe to pass to backend
+    toast({
+      title: 'Profile Check',
+      description: 'Validating profile... (feature coming soon)',
+    });
+    setIsValidating(false);
   };
 
   return (
@@ -51,9 +115,10 @@ const HeroSection = () => {
             />
             <Button 
               onClick={handleCheck}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-6 rounded-3xl transition-all transform hover:scale-[1.02] active:scale-95 whitespace-nowrap hover:glow-pink-neon"
+              disabled={isValidating}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-6 rounded-3xl transition-all transform hover:scale-[1.02] active:scale-95 whitespace-nowrap hover:glow-pink-neon disabled:opacity-50"
             >
-              Check Profile
+              {isValidating ? 'Checking...' : 'Check Profile'}
             </Button>
           </div>
         </div>
