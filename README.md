@@ -53,10 +53,14 @@ That’s me. I am the creator and the primary "investigator" behind the platform
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Project Info
+
+[https://thebadguys.app/](https://thebadguys.lovable.app/). 
+
+## 🛠 How to Edit This Project
 
 ### Use Lovable
-The fastest way to edit is via the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID). 
+Open the project in Lovable and prompt changes. Edits are committed automatically.
 
 ### Local Development
 ```sh
