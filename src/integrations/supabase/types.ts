@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_settings: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
       app_users: {
         Row: {
           api_call_quota: number
@@ -38,6 +62,57 @@ export type Database = {
           id?: string
           notes?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          ai_analysis: string | null
+          avatar_url: string | null
+          created_at: string
+          id: string
+          is_active_on_linkedin: boolean
+          last_checked_at: string | null
+          linkedin_url: string
+          name: string
+          report_count: number
+          reported_by: string | null
+          risk_score: number
+          status: Database["public"]["Enums"]["profile_status"]
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          ai_analysis?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          is_active_on_linkedin?: boolean
+          last_checked_at?: string | null
+          linkedin_url: string
+          name: string
+          report_count?: number
+          reported_by?: string | null
+          risk_score?: number
+          status?: Database["public"]["Enums"]["profile_status"]
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ai_analysis?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          is_active_on_linkedin?: boolean
+          last_checked_at?: string | null
+          linkedin_url?: string
+          name?: string
+          report_count?: number
+          reported_by?: string | null
+          risk_score?: number
+          status?: Database["public"]["Enums"]["profile_status"]
+          title?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -77,6 +152,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      profile_status: "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -205,6 +281,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      profile_status: ["pending", "verified", "rejected"],
     },
   },
 } as const

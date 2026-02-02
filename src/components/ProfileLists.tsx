@@ -1,24 +1,83 @@
+import { useEffect, useState } from 'react';
 import ProfileCard from './ProfileCard';
 import { Clock, TrendingUp } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
-// Mock data - would come from database
-const latestProfiles = [
-  { id: 1, name: 'John CryptoRecruiter', title: 'Senior Talent Acquisition at Web3 Solutions', riskScore: 87, isActive: true },
-  { id: 2, name: 'Sarah TechHunter', title: 'HR Director at GlobalTech Inc', riskScore: 92, isActive: true },
-  { id: 3, name: 'Michael Blockchain', title: 'CEO & Founder at DeFi Ventures', riskScore: 78, isActive: false },
-  { id: 4, name: 'Emily CareerCoach', title: 'Executive Recruiter at Fortune 500', riskScore: 65, isActive: true },
-  { id: 5, name: 'David RemoteJobs', title: 'Talent Scout at Remote First Co', riskScore: 89, isActive: true },
-];
-
-const trendingProfiles = [
-  { id: 1, name: 'Alex NFTRecruiter', title: 'Head of Talent at Metaverse Labs', riskScore: 95, searchCount: 1247 },
-  { id: 2, name: 'Jessica StartupHR', title: 'People Operations at Stealth Startup', riskScore: 88, searchCount: 892 },
-  { id: 3, name: 'Ryan CryptoTalent', title: 'Technical Recruiter at Blockchain Co', riskScore: 91, searchCount: 756 },
-  { id: 4, name: 'Amanda Investment', title: 'Senior Partner at Venture Capital', riskScore: 72, searchCount: 543 },
-  { id: 5, name: 'Chris RemoteWork', title: 'Hiring Manager at DistributedTeam', riskScore: 84, searchCount: 421 },
-];
+interface Profile {
+  id: string;
+  name: string;
+  title: string | null;
+  risk_score: number;
+  is_active_on_linkedin: boolean;
+  report_count: number;
+  created_at: string;
+}
 
 const ProfileLists = () => {
+  const [latestProfiles, setLatestProfiles] = useState<Profile[]>([]);
+  const [trendingProfiles, setTrendingProfiles] = useState<Profile[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProfiles();
+  }, []);
+
+  const fetchProfiles = async () => {
+    try {
+      // Fetch latest verified profiles (public can see verified only)
+      const { data: latest, error: latestError } = await supabase
+        .from('profiles')
+        .select('id, name, title, risk_score, is_active_on_linkedin, report_count, created_at')
+        .eq('status', 'verified')
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (latestError) throw latestError;
+      setLatestProfiles((latest as Profile[]) || []);
+
+      // Fetch most reported (trending) verified profiles
+      const { data: trending, error: trendingError } = await supabase
+        .from('profiles')
+        .select('id, name, title, risk_score, is_active_on_linkedin, report_count, created_at')
+        .eq('status', 'verified')
+        .order('report_count', { ascending: false })
+        .limit(5);
+
+      if (trendingError) throw trendingError;
+      setTrendingProfiles((trending as Profile[]) || []);
+    } catch (error) {
+      console.error('Error fetching profiles:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="px-4 py-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-center py-12">
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show placeholder if no profiles yet
+  if (latestProfiles.length === 0 && trendingProfiles.length === 0) {
+    return (
+      <section className="px-4 py-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center py-12 text-muted-foreground">
+            <p className="font-serif text-xl mb-2">No verified profiles yet</p>
+            <p className="text-sm">Be the first to report a suspicious profile!</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="px-4 py-12">
       <div className="max-w-6xl mx-auto">
@@ -27,37 +86,45 @@ const ProfileLists = () => {
           <div className="bg-card/50 rounded-3xl border border-secondary/10 p-6">
             <div className="flex items-center gap-3 mb-6">
               <Clock size={20} className="text-primary" />
-              <h3 className="font-serif text-xl text-foreground">Latest Reported</h3>
+              <h3 className="font-serif text-xl text-foreground">Latest Verified</h3>
             </div>
             <div className="space-y-4">
-              {latestProfiles.map((profile) => (
-                <ProfileCard 
-                  key={profile.id}
-                  name={profile.name}
-                  title={profile.title}
-                  riskScore={profile.riskScore}
-                  isActive={profile.isActive}
-                />
-              ))}
+              {latestProfiles.length > 0 ? (
+                latestProfiles.map((profile) => (
+                  <ProfileCard 
+                    key={profile.id}
+                    name={profile.name}
+                    title={profile.title || 'Unknown'}
+                    riskScore={profile.risk_score}
+                    isActive={profile.is_active_on_linkedin}
+                  />
+                ))
+              ) : (
+                <p className="text-muted-foreground text-sm text-center py-4">No profiles yet</p>
+              )}
             </div>
           </div>
 
-          {/* Trending / Most Searched */}
+          {/* Trending / Most Reported */}
           <div className="bg-card/50 rounded-3xl border border-secondary/10 p-6">
             <div className="flex items-center gap-3 mb-6">
               <TrendingUp size={20} className="text-primary" />
-              <h3 className="font-serif text-xl text-foreground">Most Searched</h3>
+              <h3 className="font-serif text-xl text-foreground">Most Reported</h3>
             </div>
             <div className="space-y-4">
-              {trendingProfiles.map((profile) => (
-                <ProfileCard 
-                  key={profile.id}
-                  name={profile.name}
-                  title={profile.title}
-                  riskScore={profile.riskScore}
-                  searchCount={profile.searchCount}
-                />
-              ))}
+              {trendingProfiles.length > 0 ? (
+                trendingProfiles.map((profile) => (
+                  <ProfileCard 
+                    key={profile.id}
+                    name={profile.name}
+                    title={profile.title || 'Unknown'}
+                    riskScore={profile.risk_score}
+                    searchCount={profile.report_count}
+                  />
+                ))
+              ) : (
+                <p className="text-muted-foreground text-sm text-center py-4">No profiles yet</p>
+              )}
             </div>
           </div>
         </div>
